@@ -1,20 +1,94 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<nav class="navbar bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand">{{ nama }}</a>
-      <div class="d-flex" role="search">
-        <button class="btn btn-outline-success">
-        <a href="{% url 'wishlist:logout' %}">
-            Logout
-        </a>
-        </button>
-      </div>
-    </div>
-</nav>
 
-<table>
+<style>
+    body {
+        background-color: #a7cced;
+    }
+    .header {
+        padding: 20px;
+        background-color: #edf6ff;
+        text-align: center;
+    }
+    .primary-heading {
+        font-family: "Raleway", sans-serif;
+        font-size: xx-large;
+        color: #014f86;
+        margin-bottom: 8px;
+        margin-top: 8px;
+    }
+    .body {
+        background-color: #edf6ff;
+        padding-top: 16px;
+        padding: 16px;
+    }
+    
+    .footer {
+        margin-top: 5px;
+    }
+    button {
+        border-radius: 5px;
+        background-color: #168aad;
+        border: black;
+        padding: 10px 13px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: small;
+        color: black;
+    }
+    button:active{
+      background-color: #caf0f8;
+    }
+    a {
+        color: #021414;
+        font-size: 14px;
+        text-decoration-line: none;
+    }
+    
+    #todos {
+        margin-left: auto;
+        margin-right: auto;
+        align-content: center;
+        font-family:"Raleway", sans-serif;
+        border-collapse: collapse;
+        width:100%;
+        outline-color: black;
+    }
+    
+    #todos tr:nth-child(odd){background-color: #ffffff;}
+    
+    #todos tr:hover {background-color: #caf0f8;}
+    
+    #todos td, #todos th {
+      border: none;
+      padding: 8px;
+      text-align: center;
+    }
+    
+    #todos th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      background-color: #014f86;
+      color: #ffffff;
+      font-size: medium;
+      font-weight: 600;
+    }
+</style>
+
+<nav class="navbar navbar-dark bg-primary" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" >{{nama}}</a>
+        <button class="btn btn-outline-success">
+            <a href="{% url 'wishlist:logout' %}">
+                Logout
+            </a>
+            </button>
+      </div>
+  </nav>
+
+<table style="padding: 10px;" id="todos">
     <tr>
     <th>Nama Barang</th>
     <th>Harga Barang</th>
@@ -29,5 +103,7 @@
         </tr>
     {% endfor %}
 </table>
-<h5>Sesi terakhir login: {{ last_login }}</h5>
+<div class="footer" style="padding-top: 5px;">
+    <h5 style="font-size: medium;">Sesi terakhir login: {{ last_login }} </h5>
+</div>
 {% endblock content %}
