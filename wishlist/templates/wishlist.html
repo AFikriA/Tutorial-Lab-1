@@ -1,52 +1,18 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block content %}    
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
 
 <style>
     body {
         background-color: #a7cced;
     }
-    .header {
-        padding: 20px;
-        background-color: #edf6ff;
-        text-align: center;
-    }
-    .primary-heading {
-        font-family: "Raleway", sans-serif;
-        font-size: xx-large;
-        color: #014f86;
-        margin-bottom: 8px;
-        margin-top: 8px;
-    }
-    .body {
-        background-color: #edf6ff;
-        padding-top: 16px;
-        padding: 16px;
-    }
-    
-    .footer {
-        margin-top: 5px;
-    }
-    button {
-        border-radius: 5px;
-        background-color: #168aad;
-        border: black;
-        padding: 10px 13px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: small;
-        color: black;
-    }
-    button:active{
-      background-color: #caf0f8;
-    }
-    a {
-        color: #021414;
-        font-size: 14px;
-        text-decoration-line: none;
-    }
-    
     #todos {
         margin-left: auto;
         margin-right: auto;
@@ -77,33 +43,39 @@
     }
 </style>
 
-<nav class="navbar navbar-dark bg-primary" style="background-color: #e3f2fd;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#" >{{nama}}</a>
-        <button class="btn btn-outline-success">
-            <a href="{% url 'wishlist:logout' %}">
-                Logout
-            </a>
-            </button>
-      </div>
-  </nav>
+<body>
+    <nav class="navbar navbar-dark" style="background-color:#0D3B66; padding: 8px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+        
+        <div class="container-fluid">
+    
+        <a class="navbar-brand" href="#" style="color:#feffff; font-weight: 500;">Aulia Fikri Al Khawariz</a>
 
-<table style="padding: 10px;" id="todos">
-    <tr>
-    <th>Nama Barang</th>
-    <th>Harga Barang</th>
-    <th>Deskripsi</th>
-    </tr>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for barang in list_barang %}
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'wishlist:logout' %}" style="color:#feffff; font-weight: 500;">Log Out</a></li>
+        </ul>
+
+        </div>
+    </nav>
+    
+    <table style="padding: 10px;" id="todos">
         <tr>
-            <th>{{barang.nama_barang}}</th>
-            <th>{{barang.harga_barang}}</th>
-            <th>{{barang.deskripsi}}</th>
+        <th>Nama Barang</th>
+        <th>Harga Barang</th>
+        <th>Deskripsi</th>
         </tr>
-    {% endfor %}
-</table>
-<div class="footer" style="padding-top: 5px;">
-    <h5 style="font-size: medium;">Sesi terakhir login: {{ last_login }} </h5>
-</div>
+        {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+        {% for barang in list_barang %}
+            <tr>
+                <th>{{barang.nama_barang}}</th>
+                <th>{{barang.harga_barang}}</th>
+                <th>{{barang.deskripsi}}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="footer" style="padding-top: 5px;">
+        <h5 style="font-size: medium;">Sesi terakhir login: {{ last_login }} </h5>
+    </div>
+</body>
+
+</html>
 {% endblock content %}

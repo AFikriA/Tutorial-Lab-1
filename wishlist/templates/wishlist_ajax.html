@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}    
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script>
+    const fetchWishlist = async () => {
+    const res = await fetch("/wishlist/json")
+    const data = await res.json()
+
+    let table = `
+        <tr>
+            <th>Nama Barang</th>
+            <th>Harga Barang</th>
+            <th>Deskripsi</th>
+        </tr>
+    `
+
+    data.forEach((item) => {
+        fields = item.fields
+
+        table += `
+        <tr>
+            <td>${fields.nama_barang}</td>
+            <td>${fields.harga_barang}</td>
+            <td>${fields.deskripsi}</td>
+        </tr>
+        `
+    })
+
+    document.getElementById("wishlist_table").innerHTML = table
+    }
+    document.getElementById("wishlist-form").onsubmit = async (event) => {
+        event.preventDefault()
+
+        let csrftoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+        let formData = new FormData(document.getElementById("wishlist-form"))
+        let data = {}
+
+        formData.forEach((value, key) => {
+            data[key] = value
+        })
+
+        await fetch("/wishlist/ajax/submit", { 
+            method: "POST",
+            headers: {
+            "X-CSRFTOKEN": csrftoken
+            },
+            body: JSON.stringify(data)
+        })
+    }
+
+    if (window.location.pathname == "/wishlist/ajax") {
+    fetchWishlist()
+    }
+    </script>
+</head>
+
+<style>
+    body {
+        background-color: #a7cced;
+    }
+    #todos {
+        margin-left: auto;
+        margin-right: auto;
+        align-content: center;
+        font-family:"Raleway", sans-serif;
+        border-collapse: collapse;
+        width:100%;
+        outline-color: black;
+    }
+    
+    #todos tr:nth-child(odd){background-color: #ffffff;}
+    
+    #todos tr:hover {background-color: #caf0f8;}
+    
+    #todos td, #todos th {
+      border: none;
+      padding: 8px;
+      text-align: center;
+    }
+    
+    #todos th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      background-color: #014f86;
+      color: #ffffff;
+      font-size: medium;
+      font-weight: 600;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-dark" style="background-color:#0D3B66; padding: 8px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+        
+        <div class="container-fluid">
+    
+        <a class="navbar-brand" href="#" style="color:#feffff; font-weight: 500;">Aulia Fikri   Al Khawariz</a>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'wishlist:logout' %}" style="color:#feffff; font-weight: 500;">Log Out</a></li>
+        </ul>
+
+        </div>
+    </nav>
+
+    <button type="button" onclick="fetchWishlist();">Get Data</button>
+
+    <table id="wishlist_table"> 
+        {% comment %} Tambahkan data di bawah baris ini {% endcomment %} 
+    </table>
+
+    <div class="footer" style="padding-top: 5px;">
+        <h5 style="font-size: medium;">Sesi terakhir login: {{ last_login }} </h5>
+    </div>
+
+    <form method="POST" id="wishlist-form">
+        {% csrf_token %}
+        <table>
+          {{ form.as_table }}
+          <tr>
+            <td></td>
+            <td><input class="btn login_btn" type="submit" value="Create"></td>
+          </tr>
+        </table>
+      </form>
+
+</body>
+
+</html>
+{% endblock content %}
